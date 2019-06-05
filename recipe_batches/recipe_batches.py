@@ -3,25 +3,26 @@
 import math
 
 def recipe_batches(recipe, ingredients):
-  recipeItem = list(recipe.keys())
   recipeValue = list(recipe.values())
-  ingredientsItem = list(ingredients.keys())
   ingredientsQuantity = list(ingredients.values())
   newValues = []
-  if len(recipeItem) > len(ingredientsItem):
-    batches = 0
+  batches = 0
+  min = None
+  if len(recipeValue) > len(ingredientsQuantity):
     return batches
   else:
-    for i in range(0, len(recipeItem)-1):
+    for i in range(0, len(recipeValue)):
       if recipeValue[i] <= ingredientsQuantity[i]:
-        while ingredientsQuantity[i] >= recipeValue[i]:
-          x = ingredientsQuantity[i]/recipeValue[i]
-          newValues.append(x)
+        ingredientsQuantity[i] = ingredientsQuantity[i]/recipeValue[i]
+        newValues.append(ingredientsQuantity[i])
       else:
         batches = 0
-      
+  for j in range(len(newValues)):
+    if min == None or min > newValues[j]:
+      min = newValues[j]
+      batches = min
 
-  return batches
+  return round(batches)
 
 
 # if __name__ == '__main__':
@@ -33,6 +34,6 @@ def recipe_batches(recipe, ingredients):
 
 
 recipe = { 'milk': 100, 'butter': 50, 'flour': 5 }
-ingredients = { 'milk': 132, 'butter': 48, 'flour': 51 }
+ingredients = { 'milk': 132, 'butter':50, 'flour': 51 }
 
 print(recipe_batches(recipe, ingredients))
